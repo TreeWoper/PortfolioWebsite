@@ -1,0 +1,36 @@
+# Builds dist/ and publishes it to the gh-pages branch.
+# GitHub Pages must deploy THAT branch (not main).
+#
+# Repo → Settings → Pages → Source: Deploy from a branch
+#   Branch: gh-pages   Folder: / (root)
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Publish dist/ to gh-pages branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+          branch: gh-pages
+          clean: true
