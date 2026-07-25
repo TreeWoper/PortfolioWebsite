@@ -1,4 +1,65 @@
 @import "tailwindcss";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+@theme {
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+
+  --color-ink: #0e0e0e;
+  --color-ink-raised: #141414;
+  --color-ink-soft: #1a1a1a;
+  --color-paper: #ebe6e0;
+  --color-muted: #9a9590;
+  --color-faint: #6b6662;
+  --color-accent: #c23a3a;
+  --color-accent-hover: #d44a4a;
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-line-strong: rgba(255, 255, 255, 0.14);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+    color: var(--color-paper);
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+/* Soft vignette; cube décor is a single cached SVG asset (not drawn in React) */
+.site-atmosphere {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background-color: var(--color-ink);
+  background-image:
+    radial-gradient(ellipse 90% 55% at 50% -8%, rgba(194, 58, 58, 0.08), transparent 55%),
+    radial-gradient(ellipse 80% 45% at 50% 110%, rgba(14, 14, 14, 0.65), transparent 55%);
+}
+
+.site-cubes {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 100% 100%;
+}
